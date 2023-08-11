@@ -1,0 +1,927 @@
+ <!DOCTYPE html>
+<html lang="en">
+   <meta charset="UTF-8">
+   <title>Typescript Tutorial</title>
+   <meta name="viewport" content="width=device-width,initial-scale=1">
+   
+   <link rel="stylesheet" href="./styles.css">
+   <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css"
+      >
+   <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css"
+      >
+   
+   <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous">
+   </script>
+   <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"
+      >
+   </script>
+   <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"
+      >
+   </script>
+   
+   <body>
+      <div class="content-column">
+         <h1>Typescript Tutorial</h1>
+         
+         <br/>
+         
+         <p>
+         Tutorials and examples of typescript features.
+         </p>
+         
+         <!--
+         <p><i class="angle right icon"></i>Contents</p>
+         
+         <div class="toc">
+            <div class="toc-item">
+               <a href="#using_classes">
+                  Using Classes
+               </a>
+            </div>
+         </div>
+         -->
+         
+         <br/>
+         
+         <p>
+         <program_name>Typescript</program_name> is a
+         superset of
+         <program_name>javascript</program_name> which adds
+         static typing. Whereas
+         <program_name>javascript</program_name> is loosely
+         typed,
+         <program_name>typescript</program_name> can detect
+         mismatched types and report errors based on them.
+         </p>
+         
+         <p>
+         <program_name>Typescript</program_name> is
+         generally compiled into
+         <program_name>javascript</program_name>
+         using the typescript compiler,
+         <program_name>tsc</program_name>. On Ubuntu the
+         <program_name>tsc</program_name> compiler can be
+         installed (using
+         <program_name>nodejs</program_name> and
+         <program_name>npm</program_name>) as follows:
+         </p>
+         
+         <p>
+         Download <program_name>nodejs</program_name> from
+         https://nodejs.org/en and unpack it. Add the bin/
+         subdirectory to your
+         <constant_name>PATH</constant_name> variable, for
+         example (on Ubuntu/Debian:)
+         </p>
+         
+         <div class="command_line">export PATH=$PATH:$(realpath ./node-v18.17.1-linux-x64/bin)</div>
+         
+         <p>
+         Create a subdirectory called node_modules in bin/
+         and run npm as follows:
+         </p>
+         
+         <div class="command_line">npm config set prefix "path/to/node_modules"</div>
+         
+         <p>
+         Install the typescript compiler
+         ('<program_name>tsc</program_name>') as follows:
+         </p>
+         
+         <div class="command_line">npm install -g typescript</div>
+         
+         <p>
+         Run tsc to get the version number as follows:
+         </p>
+         
+         <div class="command_line">npx tsc --version</div>
+         
+         <p>
+         Typescript has two main ways to assign types:
+         <i>implicit</i> ('inference') and <i>explicit</i>.
+         In explicit mode you must write out the type along
+         with the declaration:
+         </p>
+         
+         <pre><code class="language-typescript">let s : string = "Hello World!";</code></pre>
+         
+         <p>
+         In implicit mode the type is not specified and
+         <program_name>tsc</program_name> will
+         deduce the type from the assignment:
+         </p>
+         
+         <pre><code class="language-typescript">let s = "Hello World!";             // string
+s = 42;                             // Error: assigning to a
+                                    // different type is not
+                                    // allowed
+s = null;                           // Assigning to null is
+                                    // allowed, unless strict
+                                    // null checks are enabled.</code></pre>
+         
+         <p>
+         Typescript provides an 'any' type, which disables
+         type checking:
+         </p>
+         
+         <pre><code class="language-typescript">let s : any = "Hello World!";
+s = 42;                             // Allowed</code></pre>
+         
+         
+         <p>
+         tsc reads configuration options from a file named
+         <entity_name>tsconfig.json</entity_name>. A simple
+         version of this file can be generated using
+         <program_name>npx tsc --init</program_name>. You
+         can customize the behaviour of
+         <program_name>tsc</program_name> for your project
+         using the configuration options in tsconfig.json.
+         If (for example) you open
+         <entity_name>tsconfig.json</entity_name> in a text 
+         editor and uncomment the line "noImplicitAny":
+         true, then the above 'any' keyword will not longer
+         be allowed.
+         </p>
+         
+         <p>
+         There are 7 allowed primitive types in javascript.
+         These are: <constant_name>bigint</constant_name>,
+         <constant_name>boolean</constant_name>,
+         <constant_name>null</constant_name>,
+         <constant_name>number</constant_name>,
+         <constant_name>string</constant_name>,
+         <constant_name>symbol</constant_name> and
+         <constant_name>undefined</constant_name>. Of
+         these, '<constant_name>boolean</constant_name>',
+         '<constant_name>number</constant_name>' and '
+         <constant_name>string</constant_name>' are
+         the most common. By default,
+         '<constant_name>null</constant_name>' and
+         '<constant_name>undefined</constant_name>' can
+         be assigned to anything. To disable this, add
+         strictNullChecks:true to
+         <entity_name>tsconfig.json</entity_name>. In this 
+         case, allowing <constant_name>null</constant_name>
+         to be assigned to a variable requires a union type
+         including the null keyword:
+         </p>
+         
+         <pre><code class="language-typescript">let s : string | null = "Hello World!";
+s = null;                           // Allowed
+s = undefined;                      // Not allowed</code></pre>
+         
+         <p>
+         In addition to the primitive types,
+         <program_name>typescript</program_name> also
+         provides special types including
+         '<constant_name>unknown</constant_name>' and
+         '<constant_name>never</constant_name>'.
+         '<constant_name>unknown</constant_name>' variables
+         can be assigned anything but cannot assign to
+         anything.
+         '<constant_name>never</constant_name>' cannot be
+         assigned anything.
+         </p>
+         
+         <pre><code class="language-typescript">let s : unknown = "Hello World!";
+let s1 : string = s;                // Not allowed</code></pre>
+         
+         <p>Arrays can be typed as follows:</p>
+         
+         <pre><code class="language-typescript">let array : string[] = [];
+array.push("Hello World!");
+let array2 : readonly string[] = [];
+                                    // readonly - makes the
+                                    // array immutable.
+
+let array3 = [1,2,3];               // Inferred as number[]</code></pre>
+         
+         <p>
+         In <program_name>typescript</program_name>, a
+         <i>tuple</i>
+         is an array with heterogeneous types. Use the
+         following syntax to declare the values of each slot
+         in the array:
+         </p>
+         
+         <pre><code class="language-typescript">let s : [ number, null, boolean ];
+s = [ 1, null, true ];
+
+let s2 : readonly [ number, null, boolean ] = [ 1, null, true ];
+
+s2.push("Hello World!");            // Not allowed</code></pre>
+         
+         <p>
+         <program_name>javascript</program_name> objects can
+         be typed as well:
+         </p>
+         
+         <pre><code class="language-typescript">let s : { first: string, second: string, third: number } =
+   {
+   first: "Hello",
+   second: "World!",
+   third: 42
+   }
+   ;
+
+s.third = "This is Mars"            // Not allowed - type
+                                    // inference applies to
+                                    // object properties too.</code></pre>
+         
+         <p>
+         If a property is declared in the interface, it must
+         be present in the definition. To make an interface
+         property optional, use
+         <constant_name>?</constant_name> as follows:
+         </p>
+         
+         <pre><code class="language-typescript">//
+// Without ? this definition is an error:
+//
+
+let s : { first: string, second: string, third?: number };
+s = { first: "Hello", second: "World!" }</code></pre>
+         
+         <p>
+         The indexes of properties can also be typed as
+         follows:
+         </p>
+         
+         <pre><code class="language-typescript">//
+// All property names must be of type string:
+//
+
+let s : { [ name : string ]: number } = { }
+s.Hello = 4
+s.World = 2</code></pre>
+         
+         <p>
+         In typescript an <i>enum</i> is a collection of
+         named constants:
+         </p>
+         
+         <pre><code class="language-typescript">enum Numbers {
+   First = 0,                       // Numerical values can
+                                    // be assigned, otherwise
+                                    // they start at zero.
+   Second = 1,                      
+   Third = 2
+}
+
+let s : Numbers = Numbers.First;</code></pre>
+         
+         <p>
+         Types can be defined separately of variables:
+         </p>
+         
+         <pre><code class="language-typescript">//
+// Type aliases:
+//
+
+type ScalarNumber = number;
+type ObjectType = { [ name : string ] : ScalarNumber }
+
+let s : ScalarNumber = 42
+let s2 : ObjectType = { 'first': s, 'second': s }
+
+//
+// Type alises can also take specific values, in which
+// case instances of the type must take one such value:
+//
+
+type Integer5Or6 = 5 | 6;
+let i : Integer5Or6 = 5;
+// let i2 : Integer5Or6 = 7;           // Error
+
+type String = "hello" | "world";
+let str : String = "hello";
+// let str2 : String = "hello world";  // Error</code></pre>
+         
+         <p>
+         An <i>interface</i> is an object type alias:
+         </p>
+         
+         <pre><code class="language-typescript">interface Interface0 {
+   first: number,
+   second: number
+}
+
+let s3 : Interface0 = { first: 4, second: 2 }
+
+//
+// Interfaces can extend one another:
+//
+
+interface Base0 {
+   first : number
+}
+interface Derived0 extends Base0 {
+   second : number
+}
+
+let s4 : Derived0 = { first: 4, second: 2 }</code></pre>
+         
+         <p>
+         Types can be cast to and from other types as
+         follows:
+         </p>
+         
+         <pre><code class="language-typescript">let s : unknown = "Hello World!";
+console.log( (s as string) );
+
+//
+// Casting does not make invalid expressions valid, but it
+// can prevent TSC errors:
+//
+
+let s2 : unknown = 42;
+console.log( (s2 as string).length );
+                                    // Valid tsc, but prints
+                                    // 'undefined' at runtime
+
+//
+// Alternative casting syntax:
+//
+
+let s3 : unknown = "Hello World!";
+console.log( <string> s3 );         // "Hello World!"</code></pre>
+         
+         <p>
+         Function arguments can be typed just like
+         variables. If they are, then subsequent expressions
+         involving the argument are checked for validity:
+         </p>
+         
+         <pre><code class="language-typescript">function f(object : string)
+{
+   //
+   // If this were f(object : number), the following line
+   // would be an error because number does not provide a
+   // length property:
+   //
+   console.log(object.length)
+}
+
+//
+// Named arguments can also be typed, and made optional:
+//
+
+function g
+   (
+      { first, second, third } :
+         { first: number, second: number, third? : number }
+   )
+{
+   return ( first + second + ( third || 0 ) );
+}
+
+//
+// varargs can be typed as arrays:
+//
+
+function h(first : number, ...others : number[])
+{
+   let result = first;
+   for( const other of others )
+      result += other;
+   return result;
+}
+
+f("Hello world!");
+g( { first: 4, second: 2 } );
+h(1,2,3)                            // 6</code></pre>
+         
+         <p>
+         Function return values can also be typed. If a type
+         is not specified then the return value is inferred
+         based on the code pathways that return from the
+         function:
+         </p>
+         
+         <pre><code class="language-typescript">function f(x : number) : number
+{
+   return (x + 1);
+}
+
+function g(x : number) : number | string
+{
+   if( x % 2 == 0 )
+      return x;                     // number
+   else
+      return "Odd";                 // string
+}
+
+function h() : void                 // Doesn't return a value
+{
+}
+
+console.log(f(1))                   // 2
+console.log(g(1))                   // "Odd"
+
+//
+// A function signature:
+//
+
+type Function = (x : number) => number;
+const add_one : Function = (x) => (x + 1);
+console.log(add_one(1))             // 2</code></pre>
+         
+         <p>
+         Typescript verifies that all function arguments
+         have been provided, unless some arguments are
+         marked as optional (using
+         <constant_name>?</constant_name>):
+         </p>
+         
+         <pre><code class="language-typescript">function f(x : number, y : number, z? : number) : number
+{
+   return ( x + y + (z || 0) );
+}
+
+console.log(f(1,2,3))                  // 6</code></pre>
+         
+         <p>
+         Function declarations can be overloaded based on
+         their argument types:
+         </p>
+         
+         <pre><code class="language-typescript">function f(x : number) : number
+function f(x : string) : string
+function f(x : any) : any
+{
+   if( typeof x == 'string' )
+      return x;
+   else
+      return (x + 1);
+}
+
+console.log(f(1))                      // 1
+console.log(f("Hello World!"))         // Hello World!</code></pre>
+         
+         <p>
+         Clas fields, including private fields, can also be
+         assigned types. In addition, typescript provides
+         C++-style '<entity_name>private</entity_name>',
+         '<entity_name>protected</entity_name>' and
+         '<entity_name>public</entity_name>' visibility
+         modifiers:
+         </p>
+         
+         <pre><code class="language-typescript">class Class {
+   field_ : number = 1;
+   #private_field_ : string = "Hello World!";
+   private private_field2_ : string = "This is Mars";
+   public constructor()
+   {
+   }
+   public get field() : number
+   {
+      return this.field_;
+   }
+}
+
+let c = new Class();</code></pre>
+         
+         <p>
+         Adding visibility modifiers to constructor
+         arguments automatically creates instance properties
+         with the same name:
+         </p>
+         
+         <pre><code class="language-typescript">class Class {
+   public constructor(private name_ : string) { }
+   public get name() : string
+   {
+      return this.name_;
+   }
+}
+
+let c = new Class("Hello World!");
+console.log(c.name);                // "Hello World!"</code></pre>
+         
+         <p>
+         <program_name>Typescript</program_name> provides
+         similar functionality to the C++
+         '<entity_name>const</entity_name>' keyword
+         for class members using the
+         '<entity_name>readonly</entity_name>' keyword:
+         </p>
+         
+         <pre><code class="language-typescript">class Class {
+   private readonly name_ : string;
+   public constructor(name : string)
+   {
+      //
+      // name_ cannot be assigned after this initial
+      // definition:
+      //
+      this.name_ = name;
+   }
+}</code></pre>
+         
+         <p>
+         Classes can implement interfaces, can extend one
+         another (using single inheritance), can override
+         base class methods, and can be abstract (can
+         contain unimplemented methods) as follows:
+         </p>
+         
+         <pre><code class="language-typescript">interface Interface
+{
+   get_name: () => string;
+}
+
+//
+// An abstract implementation of Interface:
+//
+
+abstract class ClassA implements Interface
+{
+   public abstract get_name() : string;
+}
+
+//
+// A concrete implementation of Interface:
+//
+
+class ClassB extends ClassA
+{
+   public constructor(protected name_ : string)
+   {
+      super();
+   }
+   
+   public get_name() : string
+   {
+      return this.name_;
+   }
+}
+
+class ClassC extends ClassB
+{
+   public constructor()
+   {
+      //
+      // Use super() to invoke the base class constructor:
+      //
+      super("Hello World!");
+   }
+   
+   //
+   // An override for a base class method:
+   //
+   
+   public override get_name() : string
+   {
+      return this.name_;
+   }
+}
+
+let c = new ClassC();
+console.log(c);                     // ClassC { name_: 'Hello World!' }</code></pre>
+         
+         <p>
+         <program_name>Typescript</program_name> classes can
+         be "templated" in ways that are similar to C++. The
+         "templated" type parameters are specified in angle
+         brackets &lt;&gt; after the class name. Templated
+         types are called
+         '<entity_name>generics</entity_name>'.
+         </p>
+         
+         <pre><code class="language-typescript">class ClassA&lt;T&gt; {
+   public constructor(private value_ : T) { }
+   public get value() : T { return this.value_; }
+   public set value(value : T) { this.value_ = value; }
+}
+
+let c = new ClassA&lt;number&gt;(42);
+console.log(c.value)                // 42
+
+c = new ClassA(42);                 // T=number can be inferred
+                                    // for constructors
+console.log(c.value)                // 42
+
+//
+// Type aliases can also be generic:
+//
+
+type Object&lt;T&gt; = { value : T };
+let c2 : Object&lt;number&gt; = { value: 42 };
+
+//
+// Class generics can be assigned default values:
+//
+
+class ClassB&lt;T = string&gt; { }
+
+//
+// Function arguments can also be made generic:
+//
+
+function fa&lt;T&gt; (x : T) : T { return x; }
+console.log(fa(1))                   // Inferred as f&lt;number&gt;(1)
+
+//
+// Generic types can also be constrained using 'extends',
+// which limited their generality:
+//
+
+function fb&lt;T extends number&gt; (x : T) { return (x + 1); }
+console.log(fb(1))                   // Inferred as f&lt;number&gt;(1)</code></pre>
+         
+         <p>
+         Typescript includes many <i>utility types</i> that
+         perform special type manipulations. For example:
+         </p>
+         
+         <pre><code class="language-typescript">//
+// Get the provision type of a Promise:
+//
+
+type A = Awaited&lt;Promise&lt;number | string&gt;&gt;;
+                                    // number | string
+
+//
+// Construct a type with all properties set to optional:
+//
+
+interface InterfaceA {
+   first: string,
+   second: string
+}
+
+let a : Partial&lt;InterfaceA&gt; = { first: "Hello World!" };
+                                    // Both properties are optional
+
+//
+// Construct a type with all properties set to non-optional:
+//
+
+interface InterfaceB {
+   first?: string,
+   second?: string
+}
+
+let b : Required&lt;InterfaceB&gt; =      // All properties are required
+   {
+      first: "Hello",
+      second: "World!"
+   }
+   ;
+
+//
+// Constructs a type with all properties set to readonly:
+//
+
+let c : Readonly&lt;InterfaceA&gt; =      // All properties are required
+   {
+      first: "Hello",
+      second: "World!"
+   }
+   ;
+
+// c.first = "Reassigned";          // Cannot assign to 'first'
+                                    // because it is a read-only
+                                    // property.
+
+
+//
+// Constructs an object with specific keys all of which have
+// specific type values:
+//
+
+interface InterfaceB
+{
+   name: string
+}
+
+let d : Record&lt; "first" | "second", InterfaceB&gt; =
+   {
+   first: { name: "Hello" },
+   second: { name: "World!" }
+   }
+   ;
+
+//
+// Extract some properties from a type:
+//
+
+type E = Pick&lt;InterfaceA, "first"&gt;;
+
+let e : E = { first: "Hello World!" };
+
+//
+// Remove (omit) some properties from a type:
+//
+
+type F = Omit&lt;InterfaceA, "first"&gt;;
+
+let f : F = { second: "Hello World!" };
+
+//
+// Exclude a type from a union of other types:
+//
+
+type G1 = number | ( () =&gt; void );
+type G2 = Exclude&lt;G1, Function&gt;;
+let g : G2 = 42;
+// let g2 : G2 = () =&gt; {};       // Error: function type is
+                                 // not assignable to number
+
+//
+// Extract a type from a union of other types:
+//
+
+type H1 = number | ( () =&gt; void );
+type H2 = Extract&lt;G1, Function&gt;;
+
+let h : H2 = () =&gt; {};
+
+//
+// Exclude 'null' and 'undefined' from a union type:
+//
+
+type I1 = number | null | undefined;
+type I2 = NonNullable&lt;I1&gt;;
+
+let i : I2 = 42;
+
+//
+// Get the parameter types of a function, as an array:
+//
+
+type J1 = Parameters&lt;(arg : { first: string }) =&gt; void&gt;;
+
+let j1 : J1 = [ { first : "Hello World!" } ];
+
+//
+// Get class constructor arguments, as an array:
+//
+
+class ClassA {
+   name_ : string;
+   public constructor(name : string)
+   {
+      this.name_ = name;
+   }
+}
+
+type K1 = ConstructorParameters&lt;typeof ClassA&gt;;
+
+let k1 : K1 = [ "Hello World!" ];
+
+//
+// Get the return type of a function:
+//
+
+function fa() : number { return 1; }
+
+type L1 = ReturnType&lt;typeof fa&gt;;   // number
+
+//
+// Extract and omit a function argument named 'this':
+//
+
+function fb(this : number) : number { return this; }
+
+type M1 = ThisParameterType&lt;typeof fb&gt;;
+let m1 : M1 = 42;
+
+type M2 = OmitThisParameter&lt;typeof fb&gt;;
+let m2 : M2 = () =&gt; { return 1; };
+
+//
+// String manipulation functions:
+//
+
+type N1 = Uppercase&lt;"Hello World!"&gt;;
+let n1 : N1 = "HELLO WORLD!";
+
+type N2 = Lowercase&lt;"Hello World!"&gt;;
+let n2 : N2 = "hello world!";
+
+type N3 = Capitalize&lt;"hello world!"&gt;;
+let n3 : N3 = "Hello world!";
+
+type N4 = Uncapitalize&lt;"Hello World!"&gt;;
+let n4 : N4 = "hello World!";</code></pre>
+         
+         <p>
+         If an object has explicit keys,
+         <constant_name>keyof</constant_name> creates the
+         type that is the union of those keys (as strings):
+         </p>
+         
+         <pre><code class="language-typescript">interface interfaceA {
+   first : string;
+   second : string;
+}
+function fa(arg : keyof interfaceA)
+{
+   console.log(arg);
+}
+
+fa("first");
+fa("second");
+// fa("third");                     // Error: no such key in
+                                    // interfaceA
+
+//
+// If a type has an index signature, keyof extracts the type
+// of the index:
+//
+
+interface interfaceB {
+   [ key : string ]: unknown
+}
+function fb(arg : keyof interfaceB)
+{
+   console.log(arg);
+}
+
+fb("third");                        // Accepts any string</code></pre>
+         
+         <p>
+         When expanding an optional property in a dot chain
+         (eg. <constant_name>object.first.second</constant_name>),
+         use <constant_name>?</constant_name> to cover the
+         possibility that a property is missing. If the
+         property is missing, the expression evaluates to
+         '<entity_name>undefined</entity_name>'.
+         </p>
+         
+         <pre><code class="language-typescript">interface interfaceA {
+   first?: { second : number }
+}
+function fa(arg : interfaceA)
+{
+   console.log(arg.first?.second);
+}
+fa( { first: { second: 42 } } )
+fa( { } )
+
+function fb() : string | undefined
+{
+   return "Hello World!";
+}
+let a : string | undefined = fb();
+let b : number = a!.length;         // Assert that a is not null/
+                                    // undefined. If strictNullChecks=
+                                    // false, it is an error not to
+                                    // do so here.</code></pre>
+         
+         <h2>Licenses</h2>
+         
+         <p>
+         
+         All of the code in this repository (including in
+         documentation and in README.md files and in HTML
+         files) is licensed under the GNU General Public
+         License, version 3. See
+         <a href="https://www.gnu.org/licenses/">
+            https://www.gnu.org/licenses/gpl-3.0.html
+         </a>.
+         
+         </p>
+         
+         <p>
+         
+         All of the text in this repository (including in
+         README.md files and in webpages) is licensed under
+         the GNU Free Documentation License. See
+         <a href="https://www.gnu.org/licenses/fdl-1.3.en.html">
+            https://www.gnu.org/licenses/fdl-1.3.en.html
+         </a>.
+         
+         </p>
+         
+         <p>
+         
+         The code snippets on this website can be found
+         at
+         <a href="https://github.com/j040222/typescript-tutorial/tree/main/code">
+            https://github.com/j040222/typescript-tutorial/tree/main/code
+         </a>.
+         
+         </p>
+         
+      </div>
+   </body>
+   
+   <script>
+      hljs.highlightAll();
+   </script>
+   
+</html> 
